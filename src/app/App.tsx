@@ -21,7 +21,9 @@ import {
  *   Date = 'date',
  * }
  */
+// eslint-disable-next-line no-shadow, no-unused-vars
 enum ParamType {
+  // eslint-disable-next-line no-unused-vars
   String = 'text',
 }
 
@@ -193,7 +195,6 @@ const theme = createTheme({
         },
       },
     },
-    
   },
 });
 
