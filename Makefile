@@ -20,3 +20,6 @@ clean:
 	
 lint:
 	npm run lint
+
+dp:
+	npm run deploy
