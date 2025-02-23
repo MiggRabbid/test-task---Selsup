@@ -164,19 +164,6 @@ class ParamEditor extends React.Component<Props, State> {
 const initialParams: Param[] = [
   { id: 1, name: 'Назначение', type: ParamType.String },
   { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
-  { id: 2, name: 'Длина', type: ParamType.String },
 ];
 
 const initialModel: Model = {
