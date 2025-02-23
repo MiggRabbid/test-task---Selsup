@@ -86,6 +86,7 @@ class ParamEditor extends React.Component<Props, State> {
     });
   };
 
+  // возможность добавлять и новые параметры. Также сюда можно добавить селект, чтобы выбирать тип нового параметра.
   addNewParam = () => {
     const newParamName = this.newParamRef.current?.value.trim() || '';
     if (!newParamName) return;
@@ -114,6 +115,7 @@ class ParamEditor extends React.Component<Props, State> {
   };
 
   render() {
+    const {} = this.getModel();
     return (
       <Paper className="w-1/2 h-fit min-h-96 p-3.5 flex flex-col justify-between gap-9 shadow-lg!">
         <List className="w-full flex flex-col">
@@ -162,6 +164,19 @@ class ParamEditor extends React.Component<Props, State> {
 const initialParams: Param[] = [
   { id: 1, name: 'Назначение', type: ParamType.String },
   { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
 ];
 
 const initialModel: Model = {
@@ -190,7 +205,15 @@ const theme = createTheme({
         root: {
           '&.Mui-focused': {
             color: '#1d293d',
-            border: '1px solid #1d293d',
+          },
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            color: '#1d293d',
           },
         },
       },
@@ -201,7 +224,7 @@ const theme = createTheme({
 /** ----- App */
 const App = () => (
   <ThemeProvider theme={theme}>
-    <Box className="w-full h-full p-6 pt-10 flex flex-col justify-start items-center gap-9">
+    <Box className="pt-10 pb-20 flex flex-col justify-start items-center gap-9">
       <h1 className="text-4xl font-bold uppercase">Редактор параметров</h1>
       <ParamEditor params={initialParams} model={initialModel} />
     </Box>
