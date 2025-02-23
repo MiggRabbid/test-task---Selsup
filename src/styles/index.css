@@ -1,0 +1,26 @@
+
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100dvw;
+  height: fit-content;
+  min-height: 100dvh;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+#root {
+  width: 100dvw;
+  height: fit-content;
+  min-height: 100dvh;
+}

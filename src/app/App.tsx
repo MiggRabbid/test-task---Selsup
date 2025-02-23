@@ -1,0 +1,210 @@
+import React from 'react';
+import {
+  Box,
+  Button,
+  createTheme,
+  FormLabel,
+  List,
+  ListItem,
+  Paper,
+  TextField,
+  ThemeProvider,
+} from '@mui/material';
+
+/** ----- ТИПИЗАЦИЯ */
+/**
+ * Перечисление ParamType используется как тип input. Сделано для расширения типов параметров.
+ * Например:
+ * enum ParamType {
+ *   String = 'text',
+ *   Number = 'number',
+ *   Date = 'date',
+ * }
+ */
+enum ParamType {
+  String = 'text',
+}
+
+type Color = string;
+
+interface Param {
+  id: number;
+  name: string;
+  type: ParamType;
+}
+
+interface ParamValue {
+  paramId: number;
+  value: string;
+}
+
+interface Model {
+  paramValues: ParamValue[];
+  colors: Color[];
+}
+
+interface Props {
+  params: Param[];
+  model: Model;
+}
+
+interface State {
+  params: Param[];
+  paramValues: ParamValue[];
+  colors: Color[];
+}
+
+/** ----- Компоненты */
+class ParamEditor extends React.Component<Props, State> {
+  private newParamRef = React.createRef<HTMLInputElement>();
+
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      params: props.params,
+      paramValues: props.model.paramValues,
+      colors: props.model.colors,
+    };
+  }
+
+  public getModel(): Model {
+    return {
+      paramValues: this.state.paramValues,
+      colors: this.state.colors,
+    };
+  }
+
+  handleParamValueChange = (paramId: number, newValue: string) => {
+    this.setState((prevState) => {
+      const updatedValues = prevState.paramValues.map((pv) =>
+        pv.paramId === paramId ? { ...pv, value: newValue } : pv,
+      );
+      return { paramValues: updatedValues };
+    });
+  };
+
+  addNewParam = () => {
+    const newParamName = this.newParamRef.current?.value.trim() || '';
+    if (!newParamName) return;
+    const lastId = this.state.params[this.state.params.length - 1]?.id || 0;
+    const newId = lastId + 1;
+
+    const newParam: Param = {
+      id: newId,
+      name: newParamName,
+      type: ParamType.String,
+    };
+
+    const newParamValue: ParamValue = {
+      paramId: newId,
+      value: '',
+    };
+
+    this.setState((prevState) => ({
+      params: [...prevState.params, newParam],
+      paramValues: [...prevState.paramValues, newParamValue],
+    }));
+
+    if (this.newParamRef.current) {
+      this.newParamRef.current.value = '';
+    }
+  };
+
+  render() {
+    return (
+      <Paper className="w-1/2 h-fit min-h-96 p-3.5 flex flex-col justify-between gap-9 shadow-lg!">
+        <List className="w-full flex flex-col">
+          {this.state.params.map((param) => {
+            const paramValue = this.state.paramValues.find(
+              (pv) => pv.paramId === param.id,
+            );
+            return (
+              <ListItem key={param.id} className="w-full flex flex-row gap-5">
+                <FormLabel className="w-40 text-gray-950! font-semibold!" color="primary">
+                  {param.name}
+                </FormLabel>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  value={paramValue?.value || ''}
+                  onChange={(e) => this.handleParamValueChange(param.id, e.target.value)}
+                />
+              </ListItem>
+            );
+          })}
+        </List>
+
+        <Box className="w-full flex flex-row gap-5">
+          <TextField
+            fullWidth
+            className="text-gray-950! border-amber-50!"
+            variant="outlined"
+            label="Новый параметр"
+            inputRef={this.newParamRef}
+          />
+          <Button
+            variant="contained"
+            className="w-40 bg-gray-950!"
+            onClick={this.addNewParam}
+          >
+            Добавить
+          </Button>
+        </Box>
+      </Paper>
+    );
+  }
+}
+
+/** ----- Начальные параметры */
+const initialParams: Param[] = [
+  { id: 1, name: 'Назначение', type: ParamType.String },
+  { id: 2, name: 'Длина', type: ParamType.String },
+];
+
+const initialModel: Model = {
+  paramValues: [
+    { paramId: 1, value: 'повседневное' },
+    { paramId: 2, value: 'макси' },
+  ],
+  colors: [],
+};
+
+/** ----- Начальные параметры */
+const theme = createTheme({
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            color: '#1d293d',
+            borderColor: '#1d293d',
+          },
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          '&.Mui-focused': {
+            color: '#1d293d',
+            border: '1px solid #1d293d',
+          },
+        },
+      },
+    },
+    
+  },
+});
+
+/** ----- App */
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <Box className="w-full h-full p-6 pt-10 flex flex-col justify-start items-center gap-9">
+      <h1 className="text-4xl font-bold uppercase">Редактор параметров</h1>
+      <ParamEditor params={initialParams} model={initialModel} />
+    </Box>
+  </ThemeProvider>
+);
+
+export default App;
